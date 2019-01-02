@@ -1,0 +1,52 @@
+# Schema definitions for the server and exposed to the client to query
+# Use the GraphQL Server to test these APIs
+
+# Takes care of defining possible queries
+type Query {
+  info: String!
+  feed(filter : String): [Link!]!
+  users:[User!]!
+}
+
+# Takes care of defining mutations
+type Mutation {
+  post(url: String!, description: String!): Link!
+  signup(email: String!, password: String!, name: String!): AuthPayload
+  login(email: String!, password: String!): AuthPayload
+  vote(linkId: ID!): Vote
+}
+
+# Takes care of defining subscriptions
+type Subscription {
+  newLink: Link
+  newVote: Vote
+}
+
+# Takes care of defining object definitions
+type Link {
+  id: ID!
+  description: String!
+  url: String!
+  postedBy: User
+  votes: [Vote!]! 
+}
+
+# Why does this Type not require a resolver like the others
+type AuthPayload {
+  token: String
+  user: User
+}
+
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  password: String!
+  links: [Link!]!
+}
+
+type Vote {
+  id: ID!
+  link: Link!
+  user: User!
+}

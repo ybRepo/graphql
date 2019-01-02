@@ -1,0 +1,30 @@
+# Definitions for the database which will help prisma generate the appropriate APIs for the server to query data
+# Datamodel definitions should enforce the same object definitions found on the server graphql schema
+# Not all object will be stored in the database. Example, Authpayload which is used by the server only. 
+# Any changes to data model should follow up with executing prisma deploy in terminal
+
+# Takes care of creating the db apis to access users and related links
+type User {
+  id: ID! @unique
+  name: String!
+  email: String! @unique
+  password: String!
+  links: [Link!]!
+  votes: [Vote!]!
+}
+
+# Takes care of creating the db apis to access a Link and the details of the User who created it
+type Link {
+  id: ID! @unique         # Assigned by the prisma server
+  createdAt: DateTime!    # Assigned by the prisma server
+  description: String!
+  url: String!
+  postedBy: User
+  votes: [Vote!]!
+}
+
+type Vote {
+  id: ID! @unique
+  link: Link!
+  user: User!
+}
