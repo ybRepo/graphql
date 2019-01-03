@@ -4,7 +4,7 @@
 # Takes care of defining possible queries
 type Query {
   info: String!
-  feed(filter : String): [Link!]!
+  feed(filter : String, skip: Int, first: Int orderBy : LinkOrderByInput): Feed!
   users:[User!]!
 }
 
@@ -31,12 +31,6 @@ type Link {
   votes: [Vote!]! 
 }
 
-# Why does this Type not require a resolver like the others
-type AuthPayload {
-  token: String
-  user: User
-}
-
 type User {
   id: ID!
   name: String!
@@ -50,3 +44,25 @@ type Vote {
   link: Link!
   user: User!
 }
+
+type Feed {
+  links: [Link!]!
+  count: Int!
+}
+
+
+type AuthPayload {        # Why does this Type not require a resolver like the others
+  token: String
+  user: User
+}
+
+# Takes care of providing the server with a list of sorting option provided by prisma
+enum LinkOrderByInput{
+  description_ASC
+  description_DESC
+  url_ASC
+  url_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+

@@ -10,10 +10,25 @@ async function feed(parent, args, context, info) {
     } : {}
 
     const links = await context.prisma.links(
-        {where}
+        {
+            where,
+            skip: args.skip,
+            first: args.first,
+            orderBy: args.orderBy,
+        }
     ) 
 
-    return links
+    const count = await context.prisma
+    .linksConnection({       // Takes care of exposing prisma advance query functionality by accessing the "type"Connection method
+        where,
+    })
+    .aggregate()
+    .count()
+
+    return {        // Takes care of returning values for links and counts const which adher to the Feed type
+        links,
+        count
+    }
 }
 
 function users(parent, args, context, info) {
