@@ -24,7 +24,9 @@ class Header extends Component{
         </div>
         <div className="flex flex-fixed">
           {authToken ? (
-            <div className="ml1 pointer black" onClick={() => {localStorage.removeItem(AUTH_TOKEN),  this.props.history.push(`/login`)}}>
+            <div className="ml1 pointer black" onClick={() => 
+              {localStorage.removeItem(AUTH_TOKEN)  
+              this.props.history.push(`/login`)}}>
               logout
             </div>
           ) : (
