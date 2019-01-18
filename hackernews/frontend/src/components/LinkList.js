@@ -10,12 +10,30 @@ const FEED_QUERY = gql `
         id
         url
         description
+        postedBy {
+          id
+          name
+        }
+        votes {
+          id
+          user {
+            id
+          }
+        }
       }
     }
   }
 `
+console.log("has location changed? ", this.props.location, prevProps.location)
 
 class LinkList extends Component {
+    
+  componentDidUpdate(prevProps) {
+    const locationChanged = this.props.location !== prevProps.location;
+    console.log("has location changed? ", this.props.location, prevProps.location)
+    return locationChanged
+  }
+  
   render() {
     return (
       <Query query={FEED_QUERY}>
@@ -27,7 +45,7 @@ class LinkList extends Component {
     
           return (
             <div>
-              {linksToRender.map(link => <Link key={link.id} link={link} />)}
+              {linksToRender.map((link, index )=> <Link key={link.id} link={link} index={index} />)}
             </div>
           )
         }}
