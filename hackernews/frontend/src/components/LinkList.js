@@ -1,30 +1,7 @@
 import React, { Component } from 'react'
 import Link from './Link'
 import { Query } from 'react-apollo'
-import gql from 'graphql-tag'
-
-export const FEED_QUERY = gql `
-  {
-    feed {
-      links {
-        id
-        url
-        description
-        postedBy {
-          id
-          name
-        }
-        votes {
-          id
-          user {
-            id
-          }
-        }
-      }
-    }
-  }
-`
-
+import {FEED_QUERY} from '../gqlQueries/query'
 
 class LinkList extends Component {
   _updateCacheAfterVote = (store, createVote, linkId) => {

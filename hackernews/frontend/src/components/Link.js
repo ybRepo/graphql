@@ -2,26 +2,7 @@ import React, { Component } from 'react'
 import { AUTH_TOKEN } from './Constants'
 import { timeDifferenceForDate } from '../utils'
 import { Mutation } from 'react-apollo'
-import gql from 'graphql-tag'
-
-const VOTE_MUTATION = gql `
-  mutation VoteMutation($linkId: ID!) {
-    vote(linkId: $linkId) {
-      id
-      link {
-        votes {
-          id
-          user {
-            id
-          }
-        }
-      }
-      user {
-        id
-      }
-    }
-  }
-`
+import { VOTE_MUTATION } from '../gqlQueries/mutation'
 
 class Link extends Component {
   render() {
@@ -51,8 +32,7 @@ class Link extends Component {
         </div>
       </div>
     </div>
-  )
-}
+  )}
 }
 
 export default Link
