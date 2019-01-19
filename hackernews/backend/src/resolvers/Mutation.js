@@ -1,9 +1,13 @@
+const fs = require('fs')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const {
-    APP_SECRET,
-    getUserId
-} = require('../utils')
+const APP_SECRET = fs.readFileSync('./private.key', 'utf8')
+const {getUserId} = require('../utils')
+
+const signOptions = {
+    expiresIn: "8h",
+    algorithm: "RS256"
+};
 
 // Takes care of user signup.
 async function signup(parent, args, context, info) {
@@ -13,11 +17,10 @@ async function signup(parent, args, context, info) {
     const user = await context.prisma.createUser({ ...args,
         password
     })
-
     // 3
     const token = jwt.sign({
         userId: user.id
-    }, APP_SECRET)
+    }, APP_SECRET, signOptions)
 
     // 4
     return {
@@ -45,7 +48,7 @@ async function login(parent, args, context, info) {
     // 3 - create token signed with userID and app_secret
     const token = jwt.sign({
         userId: user.id
-    }, APP_SECRET)
+    }, APP_SECRET, signOptions)
 
     // 4 - return token to client
     return {
