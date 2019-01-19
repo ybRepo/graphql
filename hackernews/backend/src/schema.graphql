@@ -4,8 +4,9 @@
 # Takes care of defining possible queries
 type Query {
   info: String!
-  feed(filter : String, skip: Int, first: Int orderBy : LinkOrderByInput): Feed!
+  feed(filter : String, skip: Int, first: Int, orderBy : LinkOrderByInput): Feed!
   users:[User!]!
+  user(id: ID): User
 }
 
 # Takes care of defining mutations
