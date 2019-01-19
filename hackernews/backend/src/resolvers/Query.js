@@ -19,13 +19,13 @@ async function feed(parent, args, context, info) {
     ) 
 
     const count = await context.prisma
-    .linksConnection({       // Takes care of exposing prisma advance query functionality by accessing the "type"Connection method
+    .linksConnection({                                      // using the linksConnection query from the Prisma client API to retrieve the total number of Link elements currently stored in the database.
         where,
     })
     .aggregate()
     .count()
 
-    return {        // Takes care of returning values for links and counts const which adher to the Feed type
+    return {                                               // Takes care of returning values for links and counts const which adher to the Feed type
         links,
         count
     }
