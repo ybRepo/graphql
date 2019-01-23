@@ -1,4 +1,5 @@
 function timeDifference(current, previous) {
+    console.log("This is the time parameters used to calculate elapsed time", current, previous)
     const milliSecondsPerMinute = 60 * 1000
     const milliSecondsPerHour = milliSecondsPerMinute * 60
     const milliSecondsPerDay = milliSecondsPerHour * 24
